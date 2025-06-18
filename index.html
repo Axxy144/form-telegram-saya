@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Konfirmasi Transfer</title>
+    <title>Formulir Konfirmasi</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,36 +13,49 @@
 <body>
 
     <div class="form-container">
+        <div class="form-header">
+            <h2>Formulir Konfirmasi</h2>
+            <p>Silakan isi data di bawah ini dengan benar.</p>
+        </div>
+
         <form id="deposit-form">
             <div class="input-group">
                 <label for="nominal">
                     <i class="fa-solid fa-money-bill-wave"></i>
                     Nominal (Rupiah)
                 </label>
-                <input type="number" id="nominal" name="nominal" placeholder="Masukkan nominal" required>
+                <input type="text" inputmode="numeric" id="nominal" name="nominal" placeholder="Contoh: 50.000" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="email">
+                    <i class="fa-solid fa-envelope"></i>
+                    Alamat Email
+                </label>
+                <input type="email" id="email" name="email" placeholder="Email terdaftar di KicoGame" required>
             </div>
 
             <div class="input-group">
-                <label>
+                <label for="file-input">
                     <i class="fa-solid fa-arrow-up-from-bracket"></i>
                     Upload Bukti Transfer
                 </label>
                 <div class="file-input-wrapper">
                     <input type="file" id="file-input" name="bukti" accept="image/*" required>
                     <label for="file-input" class="file-input-button">Pilih File</label>
-                    <span id="file-name" class="file-name-display">Tidak ada file yang dipilih</span>
+                    <span id="file-name" class="file-name-display">Belum ada file</span>
                 </div>
             </div>
 
             <div class="button-group">
-                <button type="submit" id="proses-btn" disabled>PROSES</button>
-                <button type="button" id="mutasi-btn">MUTASI</button>
+                <button type="submit" id="proses-btn" disabled>
+                    <i class="fa-solid fa-paper-plane"></i> Konfirmasi
+                </button>
+                <button type="button" id="mutasi-btn">
+                    <i class="fa-solid fa-receipt"></i> LIHAT MUTASI
+                </button>
             </div>
         </form>
-
-        <p class="info-text">
-            06 Juni 2025 hingga 09 Juni 2025, Pencairan dikenakan Biaya Percepatan 1% dengan kelipatan 1.000
-        </p>
     </div>
 
     <div id="loading-overlay" class="loading-overlay">
