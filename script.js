@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         loadingOverlay.style.display = 'flex'; // Tampilkan loading
 
         // URL server/back-end Anda
-        const backendUrl = 'https://URL_SERVER_ANDA/api/telegram-notify'; 
+        const backendUrl = 'https://form-telegram-saya.vercel.app/api/telegram-notify';'; 
         
         const formData = new FormData();
         formData.append('nominal', nominalInput.value);
