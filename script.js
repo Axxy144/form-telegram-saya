@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
         loadingOverlay.style.display = 'flex';
 
         // Ganti dengan URL Vercel Anda yang sudah berfungsi
-        const backendUrl = 'https://nama-proyek-anda.vercel.app/api/telegram-notify'; 
+        const backendUrl = 'https://form-telegram-saya.vercel.app/api/telegram-notify'; 
 
         const formData = new FormData();
 
