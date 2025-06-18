@@ -1,12 +1,28 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Ambil elemen dari DOM
     const nominalInput = document.getElementById('nominal');
-    const emailInput = document.getElementById('email'); // Elemen baru
+    const emailInput = document.getElementById('email');
     const fileInput = document.getElementById('file-input');
     const prosesBtn = document.getElementById('proses-btn');
     const fileNameDisplay = document.getElementById('file-name');
     const depositForm = document.getElementById('deposit-form');
     const loadingOverlay = document.getElementById('loading-overlay');
+
+    // --- FUNGSI BARU UNTUK FORMAT RUPIAH ---
+    function formatRupiah(angka) {
+        // Hapus semua karakter selain digit
+        let number_string = angka.replace(/[^,\d]/g, '').toString();
+        // Lakukan pemisahan ribuan
+        let sisa = number_string.length % 3;
+        let rupiah = number_string.substr(0, sisa);
+        let ribuan = number_string.substr(sisa).match(/\d{3}/gi);
+
+        if (ribuan) {
+            let separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+        return rupiah;
+    }
 
     // Fungsi untuk validasi format email sederhana
     function isValidEmail(email) {
@@ -17,10 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fungsi untuk memeriksa apakah form sudah valid
     function validateForm() {
         const isNominalFilled = nominalInput.value.trim() !== '';
-        const isEmailValid = isValidEmail(emailInput.value); // Pengecekan baru
+        const isEmailValid = isValidEmail(emailInput.value);
         const isFileUploaded = fileInput.files.length > 0;
 
-        // Tombol aktif jika semua kondisi terpenuhi
         if (isNominalFilled && isEmailValid && isFileUploaded) {
             prosesBtn.disabled = false;
         } else {
@@ -28,8 +43,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Tambahkan event listener untuk setiap input
-    nominalInput.addEventListener('input', validateForm);
+    // --- EVENT LISTENER UNTUK FORMAT OTOMATIS SAAT MENGETIK ---
+    nominalInput.addEventListener('keyup', function(e) {
+        // Format nilai input dengan titik ribuan
+        this.value = formatRupiah(this.value);
+        // Panggil validasi setelah format
+        validateForm();
+    });
+
+    // Event listener untuk input lainnya
     emailInput.addEventListener('input', validateForm);
     fileInput.addEventListener('change', () => {
         if (fileInput.files.length > 0) {
@@ -48,11 +70,15 @@ document.addEventListener('DOMContentLoaded', () => {
         loadingOverlay.style.display = 'flex';
 
         // Ganti dengan URL Vercel Anda yang sudah berfungsi
-        const backendUrl = 'https://form-telegram-saya.vercel.app/api/telegram-notify'; 
-        
+        const backendUrl = 'https://nama-proyek-anda.vercel.app/api/telegram-notify'; 
+
         const formData = new FormData();
-        formData.append('nominal', nominalInput.value);
-        formData.append('email', emailInput.value); // Tambahkan email ke data yang dikirim
+
+        // --- MODIFIKASI: BERSIHKAN FORMAT RUPIAH SEBELUM DIKIRIM ---
+        const rawNominalValue = nominalInput.value.replace(/\./g, '');
+
+        formData.append('nominal', rawNominalValue); // Kirim angka murni tanpa titik
+        formData.append('email', emailInput.value);
         formData.append('bukti', fileInput.files[0]);
 
         try {
