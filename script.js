@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         loadingOverlay.style.display = 'flex';
 
         // Ganti dengan URL Vercel Anda yang sudah berfungsi
-        const backendUrl = 'https://...vercel.app/api/telegram-notify'; 
+        const backendUrl = 'https://form-telegram-saya.vercel.app/api/telegram-notify'; 
         
         const formData = new FormData();
         formData.append('nominal', nominalInput.value);
