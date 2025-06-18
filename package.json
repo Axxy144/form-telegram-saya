@@ -1,0 +1,15 @@
+{
+  "name": "form-telegram-notification",
+  "version": "1.0.0",
+  "description": "Form to send Telegram notification via Vercel",
+  "main": "index.html",
+  "scripts": {
+    "start": "echo \"Error: no start script specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "formidable": "^3.5.1",
+    "node-telegram-bot-api": "^0.66.0"
+  }
+}
