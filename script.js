@@ -1,29 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Ambil elemen dari DOM
     const nominalInput = document.getElementById('nominal');
-    const emailInput = document.getElementById('email');
+    const emailInput = document.getElementById('email'); // Elemen baru
     const fileInput = document.getElementById('file-input');
     const prosesBtn = document.getElementById('proses-btn');
     const fileNameDisplay = document.getElementById('file-name');
     const depositForm = document.getElementById('deposit-form');
     const loadingOverlay = document.getElementById('loading-overlay');
-
-    // --- FUNGSI BARU UNTUK FORMAT RUPIAH ---
-    function formatRupiah(angka) {
-        let number_string = angka.replace(/[^,\d]/g, '').toString(),
-            split = number_string.split(','),
-            sisa = split[0].length % 3,
-            rupiah = split[0].substr(0, sisa),
-            ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-
-        if (ribuan) {
-            let separator = sisa ? '.' : '';
-            rupiah += separator + ribuan.join('.');
-        }
-
-        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-        return rupiah;
-    }
 
     // Fungsi untuk validasi format email sederhana
     function isValidEmail(email) {
@@ -34,9 +17,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fungsi untuk memeriksa apakah form sudah valid
     function validateForm() {
         const isNominalFilled = nominalInput.value.trim() !== '';
-        const isEmailValid = isValidEmail(emailInput.value);
+        const isEmailValid = isValidEmail(emailInput.value); // Pengecekan baru
         const isFileUploaded = fileInput.files.length > 0;
 
+        // Tombol aktif jika semua kondisi terpenuhi
         if (isNominalFilled && isEmailValid && isFileUploaded) {
             prosesBtn.disabled = false;
         } else {
@@ -44,16 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- EVENT LISTENER BARU UNTUK INPUT NOMINAL ---
-    // Kode ini akan berjalan setiap kali pengguna mengetik di kolom nominal
-    nominalInput.addEventListener('keyup', function(e) {
-        // Ambil nilai input dan format ke Rupiah
-        nominalInput.value = formatRupiah(this.value);
-        // Panggil validasi form setelah diformat
-        validateForm();
-    });
-
-    // Event listener untuk input lainnya
+    // Tambahkan event listener untuk setiap input
+    nominalInput.addEventListener('input', validateForm);
     emailInput.addEventListener('input', validateForm);
     fileInput.addEventListener('change', () => {
         if (fileInput.files.length > 0) {
@@ -71,16 +47,12 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault();
         loadingOverlay.style.display = 'flex';
 
+        // Ganti dengan URL Vercel Anda yang sudah berfungsi
         const backendUrl = 'https://...vercel.app/api/telegram-notify'; 
         
         const formData = new FormData();
-        
-        // --- MODIFIKASI PENGIRIMAN DATA NOMINAL ---
-        // Hapus titik dari format Rupiah sebelum mengirim ke server
-        const rawNominalValue = nominalInput.value.replace(/\./g, '');
-        
-        formData.append('nominal', rawNominalValue); // Kirim angka murni
-        formData.append('email', emailInput.value);
+        formData.append('nominal', nominalInput.value);
+        formData.append('email', emailInput.value); // Tambahkan email ke data yang dikirim
         formData.append('bukti', fileInput.files[0]);
 
         try {
