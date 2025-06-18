@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konfirmasi Transfer</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+    <div class="form-container">
+        <form id="deposit-form">
+            <div class="input-group">
+                <label for="nominal">
+                    <i class="fa-solid fa-money-bill-wave"></i>
+                    Nominal (Rupiah)
+                </label>
+                <input type="number" id="nominal" name="nominal" placeholder="Masukkan nominal" required>
+            </div>
+
+            <div class="input-group">
+                <label>
+                    <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                    Upload Bukti Transfer
+                </label>
+                <div class="file-input-wrapper">
+                    <input type="file" id="file-input" name="bukti" accept="image/*" required>
+                    <label for="file-input" class="file-input-button">Pilih File</label>
+                    <span id="file-name" class="file-name-display">Tidak ada file yang dipilih</span>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" id="proses-btn" disabled>PROSES</button>
+                <button type="button" id="mutasi-btn">MUTASI</button>
+            </div>
+        </form>
+
+        <p class="info-text">
+            06 Juni 2025 hingga 09 Juni 2025, Pencairan dikenakan Biaya Percepatan 1% dengan kelipatan 1.000
+        </p>
+    </div>
+
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>
